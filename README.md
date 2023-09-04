@@ -35,6 +35,6 @@ fi
 exit 0
 ```
 
-- Validate if commit message obeys "conventional commits" rules
-- Add [Jira code] to the beginning of commit msg
-- Run PHPCS (or anything else for code quality)
+### Validate if commit message obeys "conventional commits" rules
+### Add [Jira code] from branch to the beginning of commit msg
+### Run PHPCS (or anything else for code quality)
