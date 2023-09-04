@@ -6,6 +6,7 @@
     - *(optional) starts with `feature/`, `bugfix/`, `release/`, or `hotfix/`*
     - followed by `SZD-` and a single or multiple digits
     - *(optional) `_` and lowercase text with dashes*
+- **Conventional commits regex**: `^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w\-\.]+\))?(!)?: ([\w ])+`
 
 ## TODO:
 
