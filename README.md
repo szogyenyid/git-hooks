@@ -2,7 +2,10 @@
 
 ## Resources
 
-- branch regex: `^(feature\/|bugfix\/|release\/|hotfix\/){0,1}SZD-[0-9]+(_[a-z-]+)?$`
+- branch regex: `^(feature\/|bugfix\/|release\/|hotfix\/){0,1}SZD-\d+(_[a-z-]+)?$`
+    - (optional) starts with `feature/`, `bugfix/`, `release/`, or `hotfix/`
+    - followed by `SZD-` and a single or multiple digits
+    - (optional) `_` and lowercase text with dashes
 
 ## TODO:
 
