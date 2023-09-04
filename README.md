@@ -6,8 +6,12 @@
     - *(optional) starts with `feature/`, `bugfix/`, `release/`, or `hotfix/`*
     - followed by `SZD-` and a single or multiple digits
     - *(optional) `_` and lowercase text with dashes*
-- **Conventional commits regex**: `^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w\-\.]+\))?(!)?: ([\w ])+`
-![regexper](blob:https://regexper.com/81e64da9-6b61-4e0a-88ea-72c0816e0801)
+- **Conventional commits regex**: `^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w]+\))?(!)?: ([\w ])+`
+    - one of the given categories
+    - *(optional) a word in parentheses*
+    - *(optional) `!`*
+    - `: `
+    - multiple words
 
 ## TODO:
 
