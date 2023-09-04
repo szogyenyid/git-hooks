@@ -18,11 +18,15 @@
 - `: `
 - multiple words
 
-### Bash script to validate branch name
+## Hooks
+
+### Validate branch naming
+
+Should be pre-commit to prevent the creation of a wrongly named branch.
 
 ```bash
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
-valid_branch_regex="regex comes here"
+valid_branch_regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}SZD-\d+(_[a-z-]+)?$"
 if [[ ! $local_branch =~ $valid_branch_regex ]]
 then
     echo "Something is wrong with you branch name."
@@ -31,11 +35,6 @@ fi
 exit 0
 ```
 
-Should be pre-commit in order to prevent creating a wrongly named branch.
-
-## TODO:
-
-- [Validate branch naming](https://itnext.io/using-git-hooks-to-enforce-branch-naming-policy-ffd81fa01e5e)
 - Validate if commit message obeys "conventional commits" rules
 - Add [Jira code] to the beginning of commit msg
 - Run PHPCS (or anything else for code quality)
