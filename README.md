@@ -39,7 +39,7 @@ Should be pre-commit to prevent the creation of a wrongly named branch.
 
 ```bash
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
-valid_branch_regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}SZD-\d+(_[a-z-]+)?$"
+valid_branch_regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}(SZD-\d+)(_[a-z-]+)?$"
 if [[ ! $local_branch =~ $valid_branch_regex ]]
 then
     echo "Something is wrong with you branch name."
@@ -53,7 +53,7 @@ exit 0
 Must be done in prepare-commit-msg.
 
 ```bash
-regex="^(feature/|bugfix/|release/|hotfix/){0,1}(SZD-[0-9]+)(_[a-z-]+)?$"
+regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}(SZD-\d+)(_[a-z-]+)?$"
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
 
 if [[ $local_branch =~ $regex ]]; then
@@ -75,4 +75,26 @@ fi
 ```
 
 ### Validate if commit message obeys "conventional commits" rules
+
+Must be done in commit-msg.
+
+```bash
+
+regex="^\[SZD-\d+\] (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w]+\))?(!)?: [\w ,()]+"
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+
+if ! [[ $commit_msg =~ $regex ]]; then
+    echo "Commit message does not match the required pattern:"
+    echo "Pattern: $regex"
+    echo "Commit message: $commit_msg"
+    exit 1
+fi
+exit 0
+```
+
 ### Run PHPCS (or anything else for code quality)
+
+```bash
+composer phpcs
+```
