@@ -38,6 +38,10 @@
 Should be run pre-commit in order to prevent faulty code to be committed to the repository.
 
 ```bash
+#!/bin/sh
+
+# Run the built-in phpcs script in order the prevent committing wrongly styled code
+
 composer phpcs
 exit $?
 ```
@@ -47,7 +51,11 @@ exit $?
 Must be done in prepare-commit-msg.
 
 ```bash
-regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}(SZD-\d+)(_[a-z-]+)?$"
+#!/bin/sh
+
+# Get the name of the current branch by matching the second group of the regex
+
+regex="^(feature/|bugfix/|release/|hotfix/)?(LP-[0-9]+)(_[a-z-]+)?$"
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
 
 if [[ $local_branch =~ $regex ]]; then
@@ -57,15 +65,18 @@ else
     exit 1
 fi
 
+# Prepend the [issue key] to the commit message
+
 commit_msg_file="$1"
 if [ -f "$commit_msg_file" ] && [ -n "$issue" ]; then
     tmp_file=$(mktemp)
-    echo -e "[$issue] $(cat "$commit_msg_file")" > "$tmp_file"
+    echo "[$issue] $(cat "$commit_msg_file")" > "$tmp_file"
     mv "$tmp_file" "$commit_msg_file"
 else
     echo "Commit message or Jira issue not found"
     exit 1
 fi
+
 ```
 
 ### Validate if commit message obeys "conventional commits" rules
@@ -73,8 +84,17 @@ fi
 Must be done in commit-msg.
 
 ```bash
+#!/bin/sh
 
-regex="^\[SZD-\d+\] (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w]+\))?(!)?: [\w ,()]+"
+# Check if the commit message matches the required format:
+#   - (prepended automatically) [LP-number]
+#   - conventional category of the commit
+#   - (optional) name of the changed component in parentheses
+#   - (optional) exclamation mark to indicate breaking change
+#   - a colon and a space
+#   - a message containing letters (upper- or lowercase), numbers, commas, dots, parentheses
+
+regex="^\[LP-[0-9]+\] (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^\)]+\))?(!)?: [A-Za-z0-9 ,.()]+$"
 commit_msg_file="$1"
 commit_msg=$(cat "$commit_msg_file")
 
@@ -92,11 +112,20 @@ exit 0
 Should be pre-push to prevent the pushing of a wrongly named branch to remote.
 
 ```bash
+#!/bin/sh
+
+# Verify if branch name is standard:
+#   - (optional) type/
+#   - LP-number
+#   - (optional) _comma-separated-description
+
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
-valid_branch_regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}(SZD-\d+)(_[a-z-]+)?$"
+valid_branch_regex="^(feature/|bugfix/|release/|hotfix/)?(LP-[0-9]+)(_[a-z-]+)?$"
 if [[ ! $local_branch =~ $valid_branch_regex ]]
 then
     echo "Something is wrong with you branch name."
+    echo "It should match the regex: $valid_branch_regex"
+    echo "But it's value is: $local_branch"
     exit 1
 fi
 exit 0
