@@ -52,9 +52,19 @@ regex="^(feature/|bugfix/|release/|hotfix/){0,1}(SZD-[0-9]+)(_[a-z-]+)?$"
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
 
 if [[ $local_branch =~ $regex ]]; then
-    jira_ticket="${BASH_REMATCH[2]}"
+    issue="${BASH_REMATCH[2]}"
 else
     echo "Failed to fetch issue from branch name"
+    exit 1
+fi
+
+commit_msg_file="$1"
+if [ -f "$commit_msg_file" ] && [ -n "$issue" ]; then
+    tmp_file=$(mktemp)
+    echo -e "[$issue] $(cat "$commit_msg_file")" > "$tmp_file"
+    mv "$tmp_file" "$commit_msg_file"
+else
+    echo "Commit message or Jira issue not found"
     exit 1
 fi
 ```
