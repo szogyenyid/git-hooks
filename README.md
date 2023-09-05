@@ -47,5 +47,17 @@ exit 0
 
 Must be done in prepare-commit-msg.
 
+```bash
+regex="^(feature/|bugfix/|release/|hotfix/){0,1}(SZD-[0-9]+)(_[a-z-]+)?$"
+local_branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [[ $local_branch =~ $regex ]]; then
+    jira_ticket="${BASH_REMATCH[2]}"
+else
+    echo "Failed to fetch issue from branch name"
+    exit 1
+fi
+```
+
 ### Validate if commit message obeys "conventional commits" rules
 ### Run PHPCS (or anything else for code quality)
