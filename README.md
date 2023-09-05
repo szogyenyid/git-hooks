@@ -4,7 +4,7 @@
 
 ### Branch regex
 
-`^(feature\/|bugfix\/|release\/|hotfix\/){0,1}SZD-\d+(_[a-z-]+)?$`
+`^(feature\/|bugfix\/|release\/|hotfix\/){0,1}(SZD-\d+)(_[a-z-]+)?$`
 - *(optional) starts with `feature/`, `bugfix/`, `release/`, or `hotfix/`*
 - followed by `SZD-` and a single or multiple digits
 - *(optional) `_` and lowercase text with dashes*
@@ -44,5 +44,8 @@ exit 0
 ```
 
 ### Add [Jira code] from branch to the beginning of commit msg
+
+Must be done in prepare-commit-msg.
+
 ### Validate if commit message obeys "conventional commits" rules
 ### Run PHPCS (or anything else for code quality)
