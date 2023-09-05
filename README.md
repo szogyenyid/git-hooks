@@ -97,4 +97,5 @@ exit 0
 
 ```bash
 composer phpcs
+exit $?
 ```
