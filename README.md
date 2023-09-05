@@ -35,7 +35,7 @@
 
 ### Validate branch naming
 
-Should be pre-commit to prevent the creation of a wrongly named branch.
+Should be pre-push to prevent the pushing of a wrongly named branch to remote.
 
 ```bash
 local_branch="$(git rev-parse --abbrev-ref HEAD)"
