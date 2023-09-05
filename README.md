@@ -11,12 +11,17 @@
 
 ### Conventional commits regex
 
-`^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w]+\))?(!)?: ([\w ])+`
+`^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w]+\))?(!)?: [\w ,()]+`
 - one of the given categories
 - *(optional) a word in parentheses*
 - *(optional) `!`*
 - `: `
 - multiple words
+
+### Final commit msg regex:
+
+`^\[SZD-\d+\] (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\([\w]+\))?(!)?: [\w ,()]+`
+- same as commit message, but has SZD-number prepended
 
 ### Git hook order
 
