@@ -18,6 +18,14 @@
 - `: `
 - multiple words
 
+### Git hook order
+
+1. pre-commit
+2. prepare-commit-msg
+3. commit-msg
+4. post-commit
+5. pre-push
+
 ## Hooks
 
 ### Validate branch naming
