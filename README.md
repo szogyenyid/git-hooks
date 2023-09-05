@@ -33,19 +33,13 @@
 
 ## Hooks
 
-### Validate branch naming
+### Run PHPCS (or anything else for code quality)
 
-Should be pre-push to prevent the pushing of a wrongly named branch to remote.
+Should be run pre-commit in order to prevent faulty code to be committed to the repository.
 
 ```bash
-local_branch="$(git rev-parse --abbrev-ref HEAD)"
-valid_branch_regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}(SZD-\d+)(_[a-z-]+)?$"
-if [[ ! $local_branch =~ $valid_branch_regex ]]
-then
-    echo "Something is wrong with you branch name."
-    exit 1
-fi
-exit 0
+composer phpcs
+exit $?
 ```
 
 ### Add [Jira code] from branch to the beginning of commit msg
@@ -93,9 +87,17 @@ fi
 exit 0
 ```
 
-### Run PHPCS (or anything else for code quality)
+### Validate branch naming
+
+Should be pre-push to prevent the pushing of a wrongly named branch to remote.
 
 ```bash
-composer phpcs
-exit $?
+local_branch="$(git rev-parse --abbrev-ref HEAD)"
+valid_branch_regex="^(feature\/|bugfix\/|release\/|hotfix\/){0,1}(SZD-\d+)(_[a-z-]+)?$"
+if [[ ! $local_branch =~ $valid_branch_regex ]]
+then
+    echo "Something is wrong with you branch name."
+    exit 1
+fi
+exit 0
 ```
